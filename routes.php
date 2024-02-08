@@ -4,7 +4,6 @@ require "core/Router.php";
 
 $routes = [
     "GET" => [
-        "api/countries" => "controllers/countries.php",
         "api/trips" => "controllers/trips.php",
     ],
     "POST" => [

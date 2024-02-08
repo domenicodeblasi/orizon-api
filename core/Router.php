@@ -8,7 +8,6 @@ class Router {
     public function directTo($method, $uri) {
         if (array_key_exists($method, $this->routes)) {   
             // uri structure -> "api/countries" - "api/trips/:something" - "api/countries/:something"
-            // da aggiustare  per gli url tipo "api/countries?query" per non riesce a separare "?"
             $pattern = "/^api\/(countries|trips)([\/?][\w=&]+)?\/?$/";
             if (preg_match($pattern, $uri)) {
                 $firstPartUri = $this->getFirstPartUri($uri);
