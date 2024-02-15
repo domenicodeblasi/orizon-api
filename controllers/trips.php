@@ -28,18 +28,33 @@ switch ($method) {
     case "POST":
         include_once "actions/CreateAction.php";
         $action = new CreateAction("trips", $database);
-        echo "create trip";
+        
+        if (preg_match($allTripsPattern, $uri)) {
+            $action->createTrip();
+        } else {
+            require_once "errors/400.php";
+        }
         break;
 
     case "PUT":
         include_once "actions/UpdateAction.php";
         $action = new UpdateAction("trips", $database);
-        echo "update trip";
+        
+        if (preg_match($singleTripPattern, $uri)) {
+            $action->updateTrip();
+        } else {
+            require_once "errors/400.php";
+        }
         break;
 
     case "DELETE":
         include_once "actions/DeleteAction.php";
         $action = new DeleteAction("trips", $database);
-        echo "delete trip";
+        
+        if (preg_match($singleTripPattern, $uri)) {
+            $action->deleteTrip();
+        } else {
+            require_once "errors/400.php";
+        }
         break;
 }

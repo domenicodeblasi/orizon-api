@@ -19,9 +19,15 @@ class ReadAction extends BaseAction {
 
             for ($i = 0; $i < count($allTrips); $i++) {
                 $currentTrip = $allTrips[$i];
-                $countryIdsArray = explode(",", $currentTrip["country_ids"]);
+
+                if ($currentTrip["country_ids"] === NULL || $currentTrip["country_names"] === NULL) {
+                    $countryIdsArray = [];
+                    $countryNamesArray = [];
+                } else {
+                    $countryIdsArray = explode(",", $currentTrip["country_ids"]);
+                    $countryNamesArray = explode(",", $currentTrip["country_names"]);
+                }
                 $countryIdsIntArray = array_map("intval", $countryIdsArray);
-                $countryNamesArray = explode(",", $currentTrip["country_names"]);
 
                 $countries = [];
 
@@ -62,9 +68,14 @@ class ReadAction extends BaseAction {
             ];
 
             $countries = [];
-            $countryIdsArray = explode(",", $singleTrip["country_ids"]);
+            if ($singleTrip["country_ids"] === NULL || $singleTrip["country_names"] === NULL) {
+                $countryIdsArray = [];
+                $countryNamesArray = [];
+            } else {
+                $countryIdsArray = explode(",", $singleTrip["country_ids"]);
+                $countryNamesArray = explode(",", $singleTrip["country_names"]);
+            }
             $countryIdsIntArray = array_map("intval", $countryIdsArray);
-            $countryNamesArray = explode(",", $singleTrip["country_names"]);
 
             for ($i = 0; $i < count($countryIdsIntArray); $i++) {
                 $country = [
