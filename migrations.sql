@@ -20,5 +20,5 @@ CREATE TABLE REL_Trips_Countries (
     country_id INT,
     PRIMARY KEY (trip_id, country_id),
     FOREIGN KEY (trip_id) REFERENCES Trips(id) ON DELETE CASCADE,
-    FOREIGN KEY (country_id) REFERENCES Countries(id) ON DELETE CASCADE,
+    FOREIGN KEY (country_id) REFERENCES Countries(id) ON DELETE CASCADE
 );

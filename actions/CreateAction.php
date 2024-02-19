@@ -14,7 +14,8 @@ class CreateAction extends BaseAction {
             include_once "models/Trip.php";
 
             $allTrips = $this->database->selectAllFrom("trips");
-            $newTripId = end($allTrips)["id"] + 1;
+            $newTripId = count($allTrips) > 0 ? end($allTrips)["id"] + 1 : 1;
+
             $available_seats = (int)$body->available_seats;
 
             $allCountries = $this->database->selectAllFrom("countries");
@@ -34,7 +35,12 @@ class CreateAction extends BaseAction {
                 }
 
                 if (!$isCountryIdValid) {
-                    require_once "errors/400.php";
+                    header("HTTP/1.0 404 Not Found");
+                    $response = [
+                        "status" => 404,
+                        "message" => "One or more countries do not exist."
+                    ];
+                    echo json_encode($response);
                     return;
                 }
 
@@ -98,12 +104,7 @@ class CreateAction extends BaseAction {
             include_once "models/Country.php";
             
             $allCountries = $this->database->selectAllFrom("Countries");
-            
-            if (count($allCountries) < 1) {
-                $newCountryId = 1;
-            } else {
-                $newCountryId = end($allCountries)["id"] + 1;
-            }
+            $newCountryId = count($allCountries) > 0 ? end($allCountries)["id"] + 1 : 1;
             
             $country = new Country($newCountryId, $body->name);
 
